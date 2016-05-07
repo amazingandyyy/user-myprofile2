@@ -28,6 +28,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: 'profileCtrl'
         })
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('home');
 
 });
