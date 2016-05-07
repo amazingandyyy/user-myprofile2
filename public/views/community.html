@@ -1,0 +1,15 @@
+<h1>Community</h1>
+<hr>
+  <div class="col-sm-12">
+      <input type="text" class="form-control" placeholder="Serch people by name, email, or location..." ng-model="searchFilter">
+      <br>
+  </div>
+  <h4>{{(users | filter: searchFilter).length}} users found</h4>
+<div ui-sref="profile({userId: user._id})" class="col-sm-6 col-md-4" ng-repeat="user in users | filter: searchFilter track by $index">
+    <div class="list-group" style="cursor: pointer;">
+        <span href="#" class="list-group-item">
+            <h5 class="list-group-item-text"><i class="fa fa-user"></i> {{user.username}}</h5>
+            <h5 class="list-group-item-text"><i class="fa fa-globe"></i> {{user.website}}</h5>
+        </span>
+    </div>
+</div>

@@ -1,0 +1,51 @@
+<div ng-if="currentUser">
+<h1>Setting</h1>
+
+<div class="row">
+    <form ng-submit="settingProfileSubmitted()">
+        <div class="col-sm-6">
+            <div class="card card-block">
+                <div class="form-group">
+                    <h5 for="a">Email</h5>
+                    <input type="email" class="form-control" ng-model="settingProfile.username" required>
+                </div>
+                <div class="form-group">
+                    <h5 for="a">Name</h5>
+                    <input type="text" class="form-control" ng-model="settingProfile.name" required>
+                </div>
+                <div class="form-group">
+                    <h5 for="a">birthday</h5>
+                    <input type="date" class="form-control" ng-model="settingProfile.birthday">
+                </div>
+                <div class="form-group">
+                    <h5 for="a">location</h5>
+                    <input type="text" class="form-control" ng-model="settingProfile.location">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card card-block">
+                <div class="form-group">
+                    <h5 for="a">phone</h5>
+                    <input type="text" class="form-control" ng-model="settingProfile.phone">
+                </div>
+                <div class="form-group">
+                    <h5 for="a">facebook</h5>
+                    <input type="text" class="form-control" ng-model="settingProfile.facebook">
+                </div>
+                <div class="form-group">
+                    <h5 for="a">linkedin</h5>
+                    <input type="text" class="form-control" ng-model="settingProfile.linkedin">
+                </div>
+                <div class="form-group">
+                    <h5 for="a">website</h5>
+                    <input type="text" class="form-control" ng-model="settingProfile.website">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 text-center">
+            <button type="submit" class="btn btn-primary">Save Profile infomation</button>
+        </div>
+    </form>
+</div>
+</div>
