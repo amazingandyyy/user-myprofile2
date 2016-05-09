@@ -10,3 +10,11 @@ a {
     transform: scale(1.02);
     transition: .1s all ease-in-out;
 }
+.logo {
+    height: 400px;
+    z-index: -1;
+    position: absolute;
+    bottom: -150px;
+    right: -50px;
+    opacity: 0.1;
+}

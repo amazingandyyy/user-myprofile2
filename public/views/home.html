@@ -33,7 +33,7 @@
     </div>
     <div class="jumbotron" ng-hide="currentUser">
         <h1>Sign up</h1>
-        <div class="panel panel-danger" ng-if="logMsg">
+        <div class="panel panel-danger" ng-if="logMsg.err">
             <div class="panel-body">
                 {{logMsg.err}}
             </div>

@@ -3,7 +3,7 @@
 var app = angular.module('myApp');
 
 
-app.controller('mainCtrl', function($http,$scope, Auth) {
+app.controller('mainCtrl', function($http,$scope, Auth, $state) {
     console.log('mainCtrl loaded');
         Auth.getProfile().then(function(res) {
             console.log(res);
@@ -29,6 +29,7 @@ app.controller('mainCtrl', function($http,$scope, Auth) {
                 .then(function(res) {
                     $scope.currentUser = null;
                     $scope.loginInfo = null;
+                    $state.go('/');
                 }, function(err) {
                     console.log('err: ', err);
                 })
@@ -42,6 +43,7 @@ app.controller('mainCtrl', function($http,$scope, Auth) {
                     $scope.newUser = null;
                     $scope.logIn(newUser);
                     $scope.logMsg.err = null;
+                    $state.go('home');
                 }, function(err) {
                     console.log('err: ', err);
                     $scope.logMsg = {err: 'Username is been taken!'}
