@@ -13,7 +13,8 @@ var userSchema = new mongoose.Schema({
         unique: true
     },
     password: {
-        type: String
+        type: String,
+        select: false
     },
     displayName: {
         type: String
@@ -28,6 +29,9 @@ var userSchema = new mongoose.Schema({
         type: String
     },
     instagram: {
+        type: String
+    },
+    picture:{
         type: String
     }
 });
@@ -101,7 +105,7 @@ userSchema.statics.authenticate = function(userObj, cb) {
 
             cb(null, token);
         });
-    });
+    }).select({password: true});
 };
 
 userSchema.methods.makeToken = function() {

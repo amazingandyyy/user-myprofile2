@@ -72,7 +72,7 @@ router.post('/github', (req, res) => {
                 } else {
                     var user = new User();
                     user.github = profile.id;
-                    // user.picture = profile.avatar_url;
+                    user.picture = profile.avatar_url;
                     user.save((err, savedUser) => {
                         var token = savedUser.makeToken();
                         console.log('token: ', token);

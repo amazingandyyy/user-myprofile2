@@ -4,13 +4,13 @@ var app = angular.module('myApp');
 
 
 app.controller('mainCtrl', function($http, $scope, Auth, $state, $auth) {
+    console.log('mainCtrl loaded');
 
     $scope.authenticate = (provider) => {
         console.log('log in with ', provider);
         $auth.authenticate(provider);
     };
 
-    console.log('mainCtrl loaded');
     Auth.getProfile().then(function(res) {
         console.log(res);
         $scope.currentUser = res.data;
@@ -19,18 +19,6 @@ app.controller('mainCtrl', function($http, $scope, Auth, $state, $auth) {
     }, function(err) {
         console.log('user is not logged in.');
     })
-
-    $scope.logOut = () => {
-            console.log('Out');
-            Auth.logout()
-                .then(function(res) {
-                    $scope.currentUser = null;
-                    $scope.loginInfo = null;
-                    $state.go('/');
-                }, function(err) {
-                    console.log('err: ', err);
-                })
-        }
 
     $scope.login = (loginInfo) => {
         $auth.login(loginInfo)
