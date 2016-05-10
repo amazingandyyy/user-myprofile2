@@ -6,6 +6,25 @@ var request = require('request');
 var User = require('../models/user');
 
 
+router.post('/login', (req, res) => {
+  User.authenticate(req.body, (err, token) => {
+    if(err) return res.status(400).send(err);
+    res.send({ token: token });
+  });
+});
+
+router.post('/signup', (req, res) => {
+    console.log('req.body routes/auth-18: ', req.body);
+  User.register(req.body, (err, user) => {
+    // if(err) return console.log(err);
+    console.log("EOROROR", err);
+    if(err) return res.status(400).send(err);
+    var token = user.makeToken();
+    res.send({ token: token });
+  });
+});
+
+
 router.post('/github', (req, res) => {
     console.log('req.body: ', req.body);
 
@@ -128,6 +147,49 @@ router.post('/facebook', (req, res) => {
             });
         })
     })
+});
+router.post('/instagram', (req, res) => {
+    console.log('req.body: ', req.body);
+
+    var accessTokenUrl = 'https://api.instagram.com/oauth/access_token';
+    var params = {
+        client_id: req.body.clientId,
+        redirect_uri: req.body.redirectUri,
+        client_secret: process.env.INSTAGRAM_SECRET,
+        code: req.body.code,
+        grant_type: 'authorization_code'
+    };
+    console.log('params: ', params);
+    // use code to request access token
+    request.post({
+        url: accessTokenUrl,
+        form: params,
+        json: true
+    }, (err, response, body) => {
+        console.log('bodyUUUser', body);
+        User.findOne({
+            instagram: body.user.id
+        }, function(err, existingUser) {
+            if (existingUser) {
+                return res.send({
+                    token: existingUser.makeToken()
+                });
+            }
+            var user = new User({
+                instagram: body.user.id,
+                picture: body.user.profile_picture,
+                displayName: body.user.username
+            });
+
+            user.save(function() {
+                var token = user.makeToken();
+                res.send({
+                    token: token,
+                    user: user
+                });
+            });
+        });
+    });
 });
 
 module.exports = router;

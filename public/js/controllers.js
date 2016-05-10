@@ -20,53 +20,43 @@ app.controller('mainCtrl', function($http, $scope, Auth, $state, $auth) {
         console.log('user is not logged in.');
     })
 
-    $scope.logIn = (loginInfo) => {
-        Auth.login(loginInfo)
-            .then(function(res) {
+    $scope.logOut = () => {
+            console.log('Out');
+            Auth.logout()
+                .then(function(res) {
+                    $scope.currentUser = null;
+                    $scope.loginInfo = null;
+                    $state.go('/');
+                }, function(err) {
+                    console.log('err: ', err);
+                })
+        }
+
+    $scope.login = (loginInfo) => {
+        $auth.login(loginInfo)
+            .then((res) => {
+                console.log("RES ONE");
                 $scope.currentUser = res.data;
                 $scope.loginInfo = null;
-            }, function(err) {
-                console.log('err: ', err);
+            })
+            .then((res) => {
+                console.log("RES TWO");
+                $state.go('home');
+            })
+            .catch((res) => {
+                alert(res.data.error);
             })
     }
     $scope.logout = () => {
         $auth.logout();
     }
     $scope.isAuthenticated = () => {
-            return $auth.isAuthenticated();
-        }
-        // $scope.logOut = () => {
-        //     console.log('Out');
-        //     Auth.logout()
-        //         .then(function(res) {
-        //             $scope.currentUser = null;
-        //             $scope.loginInfo = null;
-        //             $state.go('/');
-        //         }, function(err) {
-        //             console.log('err: ', err);
-        //         })
-        // }
-    $scope.signUp = (newUser) => {
-        console.log('create');
-        console.log(newUser);
-        Auth.register(newUser)
-            .then(function(res) {
-                console.log(res);
-                $scope.newUser = null;
-                $scope.logIn(newUser);
-                $scope.logMsg.err = null;
-                $state.go('home');
-            }, function(err) {
-                console.log('err: ', err);
-                $scope.logMsg = {
-                    err: 'Username is been taken!'
-                }
-            })
+        return $auth.isAuthenticated();
     }
+
 });
-app.controller('homeCtrl', function($http, $scope, Auth) {
+app.controller('homeCtrl', function($http, $scope, Auth, $auth) {
     console.log('homeCtrl loaded');
-    // $scope.logMsg.err = '';
 
     Auth.getProfile().then(function(res) {
         console.log(res);
@@ -74,6 +64,32 @@ app.controller('homeCtrl', function($http, $scope, Auth) {
     }, function(err) {
         console.log('user is not logged in.');
     });
+
+    $scope.signup = () => {
+        if ($scope.newUser.password !== $scope.newUser.password2) {
+            $scope.newUser.password = '';
+            $scope.newUser.password2 = '';
+            alert('Passwords must match.')
+        } else {
+            $auth.signup($scope.newUser)
+                .then((res) => {
+                    console.log($scope.newUser);
+                    console.log("RES 1");
+                    return $auth.login($scope.newUser);
+                })
+                .then((res) => {
+                    console.log("RES 2");
+                    $state.go('home');
+                })
+                .catch((res) => {
+                    console.log("RES 3");
+                    console.log(res.data);
+                    alert(res.data.error);
+                })
+        }
+    }
+
+
 });
 app.controller('communityCtrl', function($http, $scope, Auth) {
     console.log('communityCtrl loaded');

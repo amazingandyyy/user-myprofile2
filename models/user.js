@@ -1,20 +1,21 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var moment = require('moment');
+var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 var userSchema = new mongoose.Schema({
-    username: {
+    email: {
         type: String,
         unique: true
     },
     password: {
-        type: String,
-        select: false
+        type: String
     },
-    name: {
+    displayName: {
         type: String
     },
     phone: {
@@ -26,20 +27,8 @@ var userSchema = new mongoose.Schema({
     github: {
         type: String
     },
-    linkedin: {
+    instagram: {
         type: String
-    },
-    website: {
-        type: String
-    },
-    location: {
-        type: String
-    },
-    displayName: {
-        type: String
-    },
-    birthday: {
-        type: Date
     }
 });
 
@@ -69,38 +58,56 @@ userSchema.statics.isLoggedIn = function(req, res, next) {
 };
 
 userSchema.statics.register = function(userObj, cb) {
-    this.create(userObj, (err, user) => {
-        if (err) return cb(err);
-        cb(null, user);
+    // this.create(userObj, (err, user) => {
+    //     if (err) return cb(err);
+    //     cb(null, user);
+    // });
+    console.log('userObj:', userObj);
+    User.findOne({
+        email: userObj.email
+    }, (err, dbUser) => {
+        console.log(err, dbUser);
+        if (err || dbUser) return cb(err || {
+            error: 'Email not available.'
+        })
+
+        bcrypt.hash(userObj.password, 12, (err, hash) => {
+            if (err) return cb(err);
+
+            var user = new User({
+                email: userObj.email,
+                password: hash
+            });
+
+            user.save(cb);
+        });
     });
 };
 
 userSchema.statics.authenticate = function(userObj, cb) {
+    console.log(userObj);
     this.findOne({
-        username: userObj.username
+        email: userObj.email
     }, (err, dbUser) => {
         if (err || !dbUser) return cb(err || {
-            error: 'Login failed. Username or password incorrect.'
+            error: 'Login failed. Email or password incorrect.'
         });
+        console.log("LOG", dbUser);
 
-        if (dbUser.password !== userObj.password) {
-            return cb({
-                error: 'Login failed. Username or password incorrect.'
-            });
-        }
+        bcrypt.compare(userObj.password, dbUser.password, (err, isGood) => {
+            if (err || !isGood) return cb(err || { error: 'Login failed. Email or password incorrect.'});
+            console.log(isGood);
+            var token = dbUser.makeToken();
 
-        var token = dbUser.makeToken();
-        dbUser.password = null;
-        cb(null, {
-            token,
-            dbUser
+            cb(null, token);
         });
-    }).select("+password");
+    });
 };
 
 userSchema.methods.makeToken = function() {
     var token = jwt.sign({
-        _id: this._id
+        _id: this._id,
+        exp: moment().add(1, 'day').unix() // in seconds
     }, JWT_SECRET);
     return token;
 };

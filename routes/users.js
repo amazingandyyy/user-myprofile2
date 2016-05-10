@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 //   /api/users/register
-router.post('/register', (req, res) => {
+router.post('/signup', (req, res) => {
     console.log(req.body);
     User.register(req.body, err => {
         res.status(err ? 400 : 200).send(err);

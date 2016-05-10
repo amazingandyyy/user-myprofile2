@@ -9,15 +9,15 @@ app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
     $authProvider
         .github({
             clientId: 'dc615a3b2c2f187404db'
-        })
+        });
     $authProvider
         .facebook({
             clientId: '1057286630983532'
-        })
+        });
     $authProvider
         .instagram({
             clientId: '2d10f038b89e4d81a5806d85c8ef04fe'
-        })
+        });
 
 
     $stateProvider
