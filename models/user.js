@@ -35,6 +35,9 @@ var userSchema = new mongoose.Schema({
     location: {
         type: String
     },
+    displayName: {
+        type: String
+    },
     birthday: {
         type: Date
     }
