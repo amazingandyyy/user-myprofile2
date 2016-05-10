@@ -12,6 +12,7 @@
 </head>
 
 <body ng-app="myApp" ng-controller="mainCtrl as main">
+    <p>log in: {{isAuthenticated()}}</p>
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -29,7 +30,7 @@
                 <ul class="nav navbar-nav">
                     <li><a ui-sref="community">Community</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" ng-hide="currentUser">
+                <ul class="nav navbar-nav navbar-right" ng-hide="isAuthenticated()">
                     <form class="navbar-form" ng-submit="logIn(loginInfo)">
                         <div class="form-group">
                             <input type="email" class="form-control" required placeholder="sample@email.com" ng-model="loginInfo.username">
@@ -38,12 +39,12 @@
                             <input type="password" class="form-control" required placeholder="Password" ng-model="loginInfo.password">
                         </div>
                         <button type="submit" class="btn btn-default">Log in</button>
-                        <!-- <div ng-hide="currentUser" type="button" class="btn btn-primary" ng-click="signUp()">Sign up</div> -->
+                        <!-- <div ng-hide="isAuthenticated()" type="button" class="btn btn-primary" ng-click="signUp()">Sign up</div> -->
                     </form>
                 </ul>
-                <ul class="nav navbar-nav navbar-right" ng-show="currentUser">
+                <ul class="nav navbar-nav navbar-right" ng-show="isAuthenticated()">
                     <!-- <ul class="nav navbar-nav navbar-right"> -->
-                    <li ng-click="logOut()" ui-sref="home">
+                    <li ng-click="logout()" ui-sref="home">
                         <a class="btn btn-link">Logout</a>
                     </li>
                     <li ui-sref="profileSetting">
@@ -59,7 +60,7 @@
     <div class="container">
         <ui-view></ui-view>
     </div>
-    <img class="logo" src="../css/logo.svg" ></span>
+    <!-- <img class="logo" src="../css/logo.svg" ></span> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -67,6 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/satellizer/0.14.0/satellizer.min.js"></script>
+
     <script src="../js/module.js"></script>
     <script src="../js/controllers.js"></script>
     <script src="../js/services.js"></script>

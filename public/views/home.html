@@ -1,7 +1,7 @@
 <div>
     <!-- <h1>Welcome {{currentUser.username}}</h1>
     {{currentUser}} -->
-    <div class="jumbotron" ng-show="currentUser">
+    <div class="jumbotron" ng-show="isAuthenticated()">
         <div class="row">
             <div class="col-sm-6">
                 <h2>Hi! {{currentUser.name}}</h2>
@@ -31,7 +31,7 @@
         </div>
 
     </div>
-    <div class="jumbotron" ng-hide="currentUser">
+    <div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4" ng-hide="isAuthenticated()">
         <h1>Sign up</h1>
         <div class="panel panel-danger" ng-if="logMsg.err">
             <div class="panel-body">
@@ -47,7 +47,9 @@
                 <label for="formGroupExampleInput2">password</label>
                 <input type="password" class="form-control" required id="formGroupExampleInput2" ng-model="newUser.password" placeholder="password">
             </fieldset>
-            <button type="submit" class="btn btn-primary">Sign up for free</button>
+            <button type="submit" class="btn btn-primary btn-block">Sign up for free</button><hr>
+            <span class="btn btn-default btn-block" ng-click="authenticate('github')">Sign in with <i class="fa fa-github-square" aria-hidden="true"></i> github</span>
+            <span class="btn btn-default btn-block" ng-click="authenticate('facebook')">Sign in with <i class="fa fa-facebook-square" aria-hidden="true"></i> facebook</span>
         </form>
     </div>
 </div>

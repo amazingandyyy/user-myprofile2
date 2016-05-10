@@ -1,11 +1,21 @@
 'use strict';
 
-var app = angular.module('myApp', ['ui.router','ui.bootstrap']);
+var app = angular.module('myApp', ['ui.router', 'ui.bootstrap', 'satellizer']);
 
 // localStorage.ngProductsList = [{'name': 'andy'}, {'yo': 'dd'}];
 // console.log('ddd: ', JSON.parse(localStorage.ngProductsList));
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $authProvider) {
+    $authProvider
+        .github({
+            clientId: 'dc615a3b2c2f187404db'
+        })
+    $authProvider
+        .facebook({
+            clientId: '1057286630983532'
+        })
+
+
     $stateProvider
         .state('home', {
             url: '/home',
