@@ -10,24 +10,24 @@ router.get('/', (req, res) => {
 });
 
 //   /api/users/register
-router.post('/signup', (req, res) => {
-    console.log(req.body);
-    User.register(req.body, err => {
-        res.status(err ? 400 : 200).send(err);
-    });
-});
-
-router.post('/login', (req, res) => {
-    console.log(req.body);
-    User.authenticate(req.body, (err, data) => {
-        if (err) return res.status(400).send(err);
-        res.cookie('accessToken', data.token).send(data.dbUser);
-    });
-});
-
-router.delete('/logout', (req, res) => {
-    res.clearCookie('accessToken').send();
-});
+// router.post('/signup', (req, res) => {
+//     console.log(req.body);
+//     User.register(req.body, err => {
+//         res.status(err ? 400 : 200).send(err);
+//     });
+// });
+//
+// router.post('/login', (req, res) => {
+//     console.log(req.body);
+//     User.authenticate(req.body, (err, data) => {
+//         if (err) return res.status(400).send(err);
+//         res.cookie('accessToken', data.token).send(data.dbUser);
+//     });
+// });
+//
+// router.delete('/logout', (req, res) => {
+//     res.clearCookie('accessToken').send();
+// });
 
 // /api/users/profile
 router.get('/profile/own', User.isLoggedIn, (req, res) => {

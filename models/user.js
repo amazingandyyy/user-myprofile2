@@ -9,8 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 var userSchema = new mongoose.Schema({
     email: {
-        type: String,
-        unique: true
+        type: String
     },
     password: {
         type: String,

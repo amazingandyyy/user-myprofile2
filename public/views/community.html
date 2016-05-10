@@ -8,8 +8,8 @@
 <div ui-sref="profile({userId: user._id})" class="col-sm-6 col-md-4" ng-repeat="user in users | filter: searchFilter track by $index">
     <div class="list-group" style="cursor: pointer;">
         <span href="#" class="list-group-item">
-            <h5 class="list-group-item-text"><i class="fa fa-user"></i> {{user.username}}</h5>
-            <h5 class="list-group-item-text"><i class="fa fa-globe"></i> {{user.website}}</h5>
+            <h5 class="list-group-item-text"><i class="fa fa-user"></i> {{user.email}}</h5>
+            <h5 class="list-group-item-text"><i class="fa fa-globe"></i> {{user.displayName}}</h5>
         </span>
     </div>
 </div>

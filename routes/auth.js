@@ -72,6 +72,7 @@ router.post('/github', (req, res) => {
                 } else {
                     var user = new User();
                     user.github = profile.id;
+                    user.email = profile.email;
                     user.picture = profile.avatar_url;
                     user.save((err, savedUser) => {
                         var token = savedUser.makeToken();
@@ -134,6 +135,7 @@ router.post('/facebook', (req, res) => {
                 } else {
                     var user = new User();
                     user.facebook = profile.id;
+                    user.email = profile.email;
                     user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
                     user.displayName = profile.name;
                     user.save((err, savedUser) => {
@@ -177,6 +179,7 @@ router.post('/instagram', (req, res) => {
             }
             var user = new User({
                 instagram: body.user.id,
+                email: body.user.email,
                 picture: body.user.profile_picture,
                 displayName: body.user.username
             });

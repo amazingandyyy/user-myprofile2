@@ -4,12 +4,15 @@
         <div class="col-sm-6">
             <div class="list-group">
                 <br>
-                <h2 class="list-group-item-heading">{{user.email}}'s profile</h2>
+                <h4 class="list-group-item-heading">Details of</h4>
+                <h2 class="list-group-item-heading">{{user.email}}</h2>
                 <hr>
                 <span href="#" class="list-group-item">
                     <h4 class="list-group-item-text"><i class="fa fa-user"></i> {{user.displayName}}</h4>
-                    <h4 class="list-group-item-text"><i class="fa fa-globe"></i> {{user.picture}}</h4>
+                    <h4 class="list-group-item-text"><img src="{{user.picture}}" style="max-width="200px""></h4>
                 </span>
+                <hr>
+        <button type="button" class="btn btn-primary">Send friend requests</button>
             </div>
         </div>
         <div class="col-sm-3"></div>
