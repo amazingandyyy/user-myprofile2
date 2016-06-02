@@ -8,6 +8,13 @@
   "engines": {
     "node": "5.10.1"
   },
+  "development":{
+  "clientId": "${clientId}",
+  "serverUrl" : "${UAA URL}",
+  "base64ClientCredential": "${base 64 encoding of clientId:secret}",
+  "appUrl": "http://localhost:3000",
+  "windServiceUrl": "URL to the microservice"
+},
   "dependencies": {
     "bcryptjs": "^2.3.0",
     "body-parser": "~1.13.2",
